@@ -3,6 +3,7 @@ import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 import {getPosts} from './actions/posts';
+import {getUsers, createUser} from './actions/users';
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import jam from './images/jam.png';
@@ -17,6 +18,10 @@ const App = () => {
         dispatch(getPosts());
     }, [dispatch]);
 
+    useEffect(() => {
+        dispatch(getUsers());
+    }, [dispatch]);
+    //<button onClick = {() => dispatch(createUser({name: "hello"}))}> create user </button> 
     return(
         <Container maxidth="lg">
             <AppBar className = {classes.appBar} position="static" color="inherit">
