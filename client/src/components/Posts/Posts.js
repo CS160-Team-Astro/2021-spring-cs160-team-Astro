@@ -9,10 +9,8 @@ import Post from './Post/Post';
 import useStyles from './styles';
 
 
-const Posts = () => {
-    const posts = useSelector((state) => state.posts)
+const Posts = ({posts}) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
     // Delete test button
     //<button onClick = {() => {console.log(post); dispatch(deletePost(post.id))}}> delete </button> 
 

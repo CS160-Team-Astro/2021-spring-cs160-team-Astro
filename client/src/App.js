@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {getPosts} from './actions/posts';
-import {getUsers, createUser} from './actions/users';
+import {getUsers, createUser, deleteUser} from './actions/users';
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import jam from './images/jam.png';
@@ -13,7 +13,8 @@ import useStyles from './styles';
 const App = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-
+    const users = useSelector(state => state.users)
+    const posts = useSelector(state => state.posts) 
     useEffect(() => {
         dispatch(getPosts());
     }, [dispatch]);
@@ -21,7 +22,9 @@ const App = () => {
     useEffect(() => {
         dispatch(getUsers());
     }, [dispatch]);
-    //<button onClick = {() => dispatch(createUser({name: "hello"}))}> create user </button> 
+    //<button onClick = {() => dispatch(createUser({name: "hello"}))}> create user </button>
+    //<button onClick = {() => dispatch(deleteUser(users[0].id))}> delete user </button>
+    console.log(users)
     return(
         <Container maxidth="lg">
             <AppBar className = {classes.appBar} position="static" color="inherit">
@@ -32,7 +35,7 @@ const App = () => {
                 <Container>
                     <Grid container justify="space-between" alignItems="stretch" spacing={3}>
                         <Grid item xs={12} sm={7}>
-                            <Posts />
+                            <Posts posts = {posts}/> 
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Form />

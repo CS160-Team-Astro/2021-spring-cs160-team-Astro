@@ -23,3 +23,18 @@ export const createUser = async (req, res) => {
         res.status(409).json( { message: error.message });
     }    
 }
+
+export const deleteUser = async (req, res) => {
+    console.log("server delete", req.params.id)
+    const toDelete = await UserMessage.findOne({_id: req.params.id});
+    if(!toDelete){
+        return res.status(400).json({ error: "user does not exist"})
+    } 
+    try{
+        await UserMessage.deleteOne({_id:req.params.id});
+
+        res.status(200).json(toDelete);
+    } catch (error){
+        res.status(409).json( { message: error.message });
+    }    
+}
