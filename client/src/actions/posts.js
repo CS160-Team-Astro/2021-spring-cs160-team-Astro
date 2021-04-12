@@ -1,10 +1,10 @@
-import * as api from '../api';
+import {fetchPosts, createPost as addPost, deletePost as removePost} from '../api/posts';
 
 export const getPosts = () => async (dispatch) => {
     try{
-        const { data } = await api.fetchPosts();
+        const { data } = await fetchPosts();
 
-        dispatch({ type: 'FETCH_ALL', payload: data });
+        dispatch({ type: 'pFETCH_ALL', payload: data });
     } catch (error) {
         console.log(error.message);
     }
@@ -12,9 +12,20 @@ export const getPosts = () => async (dispatch) => {
 
 export const createPost = (post) => async (dispatch) => {
     try {
-        const { data } = await api.createPost(post);
+        const { data } = await addPost(post);
 
-        dispatch({ type: 'CREATE', payload: data });
+        dispatch({ type: 'pCREATE', payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deletePost = (id) => async (dispatch) => {
+    console.log(id)
+    try {
+        await removePost(id);
+
+        dispatch({ type: 'pDELETE', id:id });
     } catch (error) {
         console.log(error);
     }
