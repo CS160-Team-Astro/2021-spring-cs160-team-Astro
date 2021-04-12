@@ -7,6 +7,7 @@ import {getUsers, createUser, deleteUser} from './actions/users';
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import Login from './components/Login/Login';
+import Searchbar from './components/Searchbar/Searchbar';
 import jam from './images/jam.png';
 import useStyles from './styles';
 
@@ -35,11 +36,16 @@ const App = () => {
             <Grow in>
                 <Container>
                     <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-                        
+                        <Grid item xs={12} sm={3}>
+                            <Searchbar/>
+                            <Posts posts = {posts}/> 
+                        </Grid>
+
                         <Grid item xs={12} sm={3}>
                             <Login/>
                             <Posts posts = {posts}/> 
                         </Grid>
+
                         <Grid item xs={12} sm={4}>
                             <Form />
                         </Grid>
