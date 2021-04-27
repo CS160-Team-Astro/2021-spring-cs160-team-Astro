@@ -12,8 +12,11 @@ const Navbar = () => {
     return (
     <AppBar className={classes.appBar} position="static" color="inherit">
         <div className={classes.brandContainer}>
-            <Typography id = "logo" component={Link} to="/" className={classes.heading} variant="h2" align="center">Jam</Typography>
+            <Typography id = "logo" component={Link} to="/" className={classes.heading} variant="h2" align="center" style={{ color: 'red',fontFamily:'Verdana'}}>Jam</Typography>
             <img className={classes.image} src={jam} alt="jam" height="60" />
+            <Button component={Link} to = "/top50" size="large" color="primary" onClick={() => {}}>TOP 50</Button>
+            <Button component={Link} to = "/allsongs" size="large" color="primary" onClick={() => {}}>ALL SONGS</Button>
+            <Button component={Link} to = "/allartists" size="large" color="primary" onClick={() => {}}>ALL ARTISTS</Button>
         </div> 
         <Toolbar className = {classes.toolbar}>
             {user ? (
