@@ -10,6 +10,26 @@ export const getPosts = () => async (dispatch) => {
     }
 }
 
+export const allPosts = () => async (dispatch) => {
+    try{
+        const { data } = await api.fetchAllPosts();
+
+        dispatch({ type: 'FETCH_ALL', payload: data });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+export const getTop50 = () => async (dispatch) => {
+    try{
+        const { data } = await api.top50Posts();
+
+        dispatch({ type: 'FETCH_ALL', payload: data });
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 export const createPost = (post) => async (dispatch) => {
     try {
         const { data } = await api.createPost(post);

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import UserMessage from '../models/userMessage.js';
 
 export const getUsers = async (req, res) => {
