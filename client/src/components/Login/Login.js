@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Paper, Container } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { createPost } from '../../actions/posts';
 import useStyles from './styles';  
 
@@ -28,6 +29,7 @@ const Login = () => {
                 <TextField name="title" variant="outlined" label="Password" fullWidth value={postData.password} onChange={(e) => setPostData({ ...postData, password: e.target.value })}/>
                 
                 <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Sign In</Button>
+                <Button id = "signUpButton" component={Link} to="/SignUpPage" variant="contained" color="primary" size="large" type="submit" fullWidth>New to Jam? Create account</Button>
             </form>
         </Paper>
     );
