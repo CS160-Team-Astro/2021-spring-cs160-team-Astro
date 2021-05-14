@@ -23,7 +23,7 @@ export const getAllPosts = async (req, res) => {
 
 export const getTop50 = async (req, res) => {
     try{
-        const postMessages = await PostMessage.find({ likeCount: {$gte: 10}});
+        const postMessages = await PostMessage.find({}).sort({ likeCount:-1 }).limit(10);
 
         res.status(200).json(postMessages);
     } catch (error) {

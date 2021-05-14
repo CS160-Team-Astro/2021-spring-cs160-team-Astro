@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import PlayArrow from '@material-ui/icons/PlayArrow';
+import Stop from '@material-ui/icons/Stop';
+import Pause from '@material-ui/icons/Pause';
 import useStyles from './styles';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
@@ -11,7 +14,32 @@ import { likePost, deletePost } from '../../../actions/posts';
 const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const audioTune = new Audio(post.selectedFile);
+    console.log(post.selectedFile)
+
+    const [playInLoop, setPlayInLoop] = useState(false);
+
+    useEffect(() => {
+        audioTune.load();
+    }, [])
+
+    useEffect(() => {
+        audioTune.loop = playInLoop;
+    }, [playInLoop])
     
+    const playSound = () => {
+        audioTune.play();
+    }
+
+    const pauseSound = () => {
+        audioTune.pause();
+    }
+
+    const stopSound = () => {
+        audioTune.pause();
+        audioTune.currentTime = 0;
+    }
+
     return(
         <Card id = {post.title} className={classes.card}>
             <CardMedia id = "card" className={classes.media} image={post.selectedFile} title={post.title} />
@@ -42,6 +70,12 @@ const Post = ({ post, setCurrentId }) => {
                 <Button id = "delete" size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
                     <DeleteIcon fontSize="small" />
                     Delete
+                </Button>
+                <Button id = "play"  onClick={playSound}>
+                    <PlayArrow fontSize="small" />
+                </Button>
+                <Button id = "pause"  onClick={pauseSound}>
+                    <Pause fontSize="small" />
                 </Button>
             </CardActions>
         </Card>

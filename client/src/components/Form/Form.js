@@ -32,7 +32,7 @@ const Form = ({ currentId, setCurrentId }) => {
     return(
         <Paper className={classes.paper}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">File Upload</Typography>
+                <Typography variant="h6">Make A Post</Typography>
                 <TextField id = "creator" name="creator" variant="outlined" label="Artist" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })}/>
                 <TextField id = "title" name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })}/>
                 <TextField id = "message" name="message" variant="outlined" label="Notes" fullWidth value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })}/>
