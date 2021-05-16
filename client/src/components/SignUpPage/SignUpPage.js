@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Grow, Grid } from '@material-ui/core';
-import SignUp from '../SignUp/SignUp';
+import SignUp from '../SignUp/signup';
 
 const SignUpPage = () => {
     return (
