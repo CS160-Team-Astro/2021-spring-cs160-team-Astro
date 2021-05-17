@@ -1,41 +1,48 @@
-import mongoose from 'mongoose';
-import UserMessage from '../models/userMessage.js';
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-export const getUsers = async (req, res) => {
-    try{
-        const users = await UserMessage.find();
+import UserModal from "../models/user.js";
 
-        res.status(200).json(users);
-    } catch (error) {
-        res.status(404).json( { message: error.message });
-    }
-}
+const secret = 'test';
 
-export const createUser = async (req, res) => {
-    const user = req.body; 
+export const signin = async (req, res) => {
+  const { email, password } = req.body;
 
-    const newUser = new UserMessage(user);
+  try {
+    const oldUser = await UserModal.findOne({ email });
 
-    try{
-        await newUser.save();
+    if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
 
-        res.status(201).json(newUser);
-    } catch (error){
-        res.status(409).json( { message: error.message });
-    }    
-}
+    const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
-export const deleteUser = async (req, res) => {
-    console.log("server delete", req.params.id)
-    const toDelete = await UserMessage.findOne({_id: req.params.id});
-    if(!toDelete){
-        return res.status(400).json({ error: "user does not exist"})
-    } 
-    try{
-        await UserMessage.deleteOne({_id:req.params.id});
+    if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
-        res.status(200).json(toDelete);
-    } catch (error){
-        res.status(409).json( { message: error.message });
-    }    
-}
+    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
+
+    res.status(200).json({ result: oldUser, token });
+  } catch (err) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const signup = async (req, res) => {
+  const { email, password, firstName, lastName } = req.body;
+
+  try {
+    const oldUser = await UserModal.findOne({ email });
+
+    if (oldUser) return res.status(400).json({ message: "User already exists" });
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const result = await UserModal.create({ email, password: hashedPassword, name: `${firstName} ${lastName}` });
+
+    const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
+
+    res.status(201).json({ result, token });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    
+    console.log(error);
+  }
+};
