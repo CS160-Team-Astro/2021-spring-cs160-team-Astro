@@ -15,6 +15,7 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
 
+
 const CONNECTION_URL = 'mongodb+srv://cs160astro:e2lPXqy8h1wjzCTt@cluster0.2npw1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;
 
